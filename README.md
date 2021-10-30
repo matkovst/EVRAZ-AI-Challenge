@@ -12,6 +12,7 @@
 ```bash
 conda env create -f docker/environment.yaml
 conda activate cdcl
+bash fetch_data.sh
 ```
 
 ## Установка через Docker
@@ -24,9 +25,11 @@ docker run --volume ~/output:/home/EVRAZ-AI-Challenge/output -it evraz_matkovst:
 ```
 
 ## Запуск
+Положите тестовые изображения в папку ./input и выполните команду
 ```bash
-python demo.py --input input/test/ --output output/test
+python demo.py --input input/ --output output/
 ```
+Обработанные изображения будут сохранены в ./output, JSON с аннотациями будет сохранен в submission/submission.json.
 
 ## References
 <a id="1">[1]</a> 
