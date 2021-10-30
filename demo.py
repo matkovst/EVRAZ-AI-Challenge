@@ -9,8 +9,8 @@ import numpy as np
 from CDCL.model_specific import get_testing_model_resnet101
 import utils
 
-# import tensorflow as tf
-# tf.logging.set_verbosity(tf.logging.ERROR)
+import tensorflow as tf
+tf.logging.set_verbosity(tf.logging.ERROR)
 
 
 class CDCL7:
@@ -247,6 +247,11 @@ def main():
                 filteredHumanBBoxes.append(bbox)
         utils.drawBBoxes(bboxesImg, filteredHumanBBoxes)
 
+        # Рисуем детальную картинку
+        rgbMaskImg = cv2.addWeighted(rgbMask, 0.3, img, 0.7, 0)
+        detailedImg = rgbMaskImg.copy()
+        utils.drawBBoxes(detailedImg, filteredHumanBBoxes, (0, 0, 255), 2)
+
         # Сохраняем результат
         image_id = -1
         for image in j['images']:
@@ -255,6 +260,8 @@ def main():
                 break
         for bbox in filteredHumanBBoxes:
             area = float(bbox[2] * bbox[3])
+            if area < 2:
+                continue
             j['annotations'].append({
                 "id": Id,
                 "image_id": image_id,
@@ -273,8 +280,13 @@ def main():
                 }
             })
             Id += 1
-        filename = '%s/%s.jpg' % (args.output, 'seg_' + filename)
-        cv2.imwrite(filename, bboxesImg)
+        
+        fname1 = '%s/%s.jpg' % (args.output, 'bbox_' + filename)
+        cv2.imwrite(fname1, bboxesImg)
+        fname2 = '%s/%s.jpg' % (args.output, 'rbg_' + filename)
+        cv2.imwrite(fname2, rgbMaskImg)
+        fname3 = '%s/%s.jpg' % (args.output, 'full_' + filename)
+        cv2.imwrite(fname3, detailedImg)
         
         # Сохраняем submission
         with open("submission/submission.json", 'w') as f:

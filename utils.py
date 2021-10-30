@@ -86,10 +86,10 @@ def containsHuman(rbgMask, bbox, thresh = 0.1):
     partsNum = np.unique(roi.reshape(-1, roi.shape[-1]), axis=0).shape[0] - 1
     return partsNum > 1
 
-def drawBBoxes(img, bboxes):
+def drawBBoxes(img, bboxes, color = (0, 0, 255), th = 1):
     for i in range(len(bboxes)):
-        cv2.rectangle(img, bboxes[i], (0, 0, 255), 1)
+        cv2.rectangle(img, bboxes[i], color, th)
 
-def drawMask(img, mask):
+def drawMask(img, mask, color = (0, 0, 255)):
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    cv2.drawContours(img, contours, -1, (0, 0, 255), -1)
+    cv2.drawContours(img, contours, -1, color, -1)

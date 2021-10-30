@@ -1,4 +1,5 @@
 # EVRAZ-AI-Challenge
+![](https://github.com/matkovst/EVRAZ-AI-Challenge/blob/master/teaser.jpg)
 Данный репозиторий содержит финальное решение для хакатона EVRAZ AI Challenge (Трек 2). </br>
 За основу решения взята модель [CDCL7](https://github.com/kevinlin311tw/CDCL-human-part-segmentation), которая сегментирует части тела человека. Сам алгоритм следующий:
 1. Находим части тела
@@ -21,7 +22,7 @@ bash fetch_data.sh
 ```bash
 docker build --tag evraz_matkovst:v1 docker/
 
-docker run --volume ~/output:/home/EVRAZ-AI-Challenge/output -it evraz_matkovst:v1 bash
+docker run --volume ./output:/home/EVRAZ-AI-Challenge/output -it evraz_matkovst:v1 bash
 ```
 
 ## Запуск
