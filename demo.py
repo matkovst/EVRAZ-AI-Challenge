@@ -232,18 +232,19 @@ def main():
 
 #         # Выводим сегментную маску
 #         segMaskImg = img.copy()
-#         humanMask = utils.humanMask(seg)
+#         humanMask = utils.humanMask(seg, thr)
 #         utils.drawMask(segMaskImg, humanMask)
 
         # Выводим прямоугольники
         bboxesImg = img.copy()
-        humanBBoxes = utils.humanBBoxes(seg)
+        thr = 0.1
+        humanBBoxes = utils.humanBBoxes(seg, thr)
 
         # Фильруем прямоугольники
-        rgbMask = utils.humanRBGMask(seg)
+        rgbMask = utils.humanRBGMask(seg, thr)
         filteredHumanBBoxes = []
         for bbox in humanBBoxes:
-            if utils.containsHuman(rgbMask, bbox):
+            if utils.containsHuman(rgbMask, bbox, thr):
                 filteredHumanBBoxes.append(bbox)
         utils.drawBBoxes(bboxesImg, filteredHumanBBoxes)
 

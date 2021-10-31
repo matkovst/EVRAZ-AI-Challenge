@@ -1,0 +1,6 @@
+*.pyc
+input/*
+!input/.gitkeep
+output/
+CDCL/weights/*
+submission/submission.json
